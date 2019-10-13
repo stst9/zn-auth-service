@@ -16,6 +16,7 @@ class AuthUserRepository {
     private EntityManager entityManager
 
     @Transactional
+    @Deprecated
     AuthUser findByEmailAndPassword(String email, String password){
         entityManager.createQuery("select u from AuthUser u where u.email=:email and u.password=:password",AuthUser)
         .setParameter("email",email)

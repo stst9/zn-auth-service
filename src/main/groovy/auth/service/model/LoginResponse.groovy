@@ -1,5 +1,7 @@
 package auth.service.model
 
+import auth.service.utils.gp.ByteUtils
+
 import java.security.PrivateKey
 
 class LoginResponse extends BaseMessage {
@@ -16,12 +18,6 @@ class LoginResponse extends BaseMessage {
     }
 
     void sign(PrivateKey key) {
-        def data = [] as byte[]
-        data << email.bytes
-        data << id.bytes
-        data << this.key.bytes
-        data << ttl.toString().bytes
-        data << timeStamp.toString().bytes
-        sign(key, data)
+        sign(key, ByteUtils.concat(email.bytes,id.bytes,this.key.bytes,ttl.toString().bytes,timeStamp.toString().bytes))
     }
 }

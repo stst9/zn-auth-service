@@ -1,6 +1,8 @@
 package auth.service.domain;
 
+import auth.service.beans.CryptUtilsBean;
 import auth.service.utils.domain.DefaultEntity;
+import auth.service.utils.gp.CryptUtils;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.persistence.*;
@@ -11,10 +13,10 @@ public class AuthKey extends DefaultEntity {
 
     @ManyToOne
     @JoinColumn(name = "ak_user_id",nullable = false)
-    private AuthUser user;
+    protected AuthUser user;
 
     @Column(name = "ak_value",nullable = false)
-    private byte[] value;
+    protected byte[] value;
 
     @Column(name = "ak_id")
     public String getId() {
@@ -31,5 +33,13 @@ public class AuthKey extends DefaultEntity {
 
     public String getValueBase64(){
         return Base64.encodeBase64String(value);
+    }
+
+    public void setValue(byte[] value) {
+        this.value = value;
+    }
+
+    public void setUser(AuthUser user) {
+        this.user = user;
     }
 }
