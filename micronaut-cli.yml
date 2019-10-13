@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: auth.service
+---
+testFramework: spock
+sourceLanguage: groovy
