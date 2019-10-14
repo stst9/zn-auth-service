@@ -17,7 +17,7 @@ public class AuthUser extends DefaultEntity {
     @OneToOne(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private AuthPassword password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<AuthKey> authKeys=new ArrayList<>();
 
     public AuthUser(){
@@ -45,6 +45,11 @@ public class AuthUser extends DefaultEntity {
 
     public List<AuthKey> getAuthKeys() {
         return authKeys;
+    }
+
+    public void addAuthKey(AuthKey key){
+        authKeys.add(key);
+        key.user=this;
     }
 
     public void setEmail(String email) {

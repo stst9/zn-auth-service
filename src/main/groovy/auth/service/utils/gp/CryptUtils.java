@@ -13,6 +13,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 
 public class CryptUtils {
+
     private HashMap<Short, Cipher> cipherHashMap = new HashMap<>();
     private HashMap<Short, SecretKeyFactory> secretKeyFactoryHashMap = new HashMap<>();
     private HashMap<Short, EncryptionSpec> encryptionImpl = new HashMap<>();
@@ -20,7 +21,7 @@ public class CryptUtils {
     private HashMap<Short, HashSpec> hashImpl = new HashMap<>();
 
 
-    public CryptUtils() throws NoSuchAlgorithmException, NoSuchPaddingException {
+    public void init() throws NoSuchPaddingException, NoSuchAlgorithmException {
         cipherHashMap.put((short) 1, Cipher.getInstance("AES/CBC/PKCS5Padding"));
 
         encryptionImpl.put((short) 1, (cipher, input, key, salt) -> { // AES/CBC/PKCS5Padding

@@ -5,6 +5,7 @@ import io.micronaut.context.annotation.Property
 import io.micronaut.context.annotation.Value
 import org.apache.commons.io.FileUtils
 
+import javax.inject.Inject
 import javax.inject.Singleton
 import java.security.KeyFactory
 import java.security.PrivateKey
@@ -12,8 +13,9 @@ import java.security.spec.PKCS8EncodedKeySpec
 
 @Singleton
 class RsaKeyStore {
-    //@Value('${micronaut.application.key:private_key.der}')
-    String privateKeyPath="./private_key.der"
+    @Inject
+    @Value('${micronaut.application.key:private_key.der}')
+    String privateKeyPath ="./private_key.der"
 
     PrivateKey privateKey=loadPrivateKey()
 

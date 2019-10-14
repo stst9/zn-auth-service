@@ -10,7 +10,7 @@ class LoginResponse extends BaseMessage {
     String key
     long ttl
 
-    LoginResponse(String email, String id, String key, long ttl = -1) {
+    LoginResponse(String id, String email, String key, long ttl = -1) {
         this.email = email
         this.id = id
         this.ttl = ttl

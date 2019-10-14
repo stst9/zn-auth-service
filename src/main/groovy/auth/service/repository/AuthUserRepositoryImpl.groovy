@@ -6,10 +6,11 @@ import io.micronaut.spring.tx.annotation.Transactional
 
 import javax.inject.Singleton
 import javax.persistence.EntityManager
+import javax.persistence.NoResultException
 import javax.persistence.PersistenceContext
 
 @Singleton
-class AuthUserRepository {
+class AuthUserRepositoryImpl implements AuthUserRepositorySpec {
 
     @PersistenceContext
     @CurrentSession
@@ -26,8 +27,27 @@ class AuthUserRepository {
 
     @Transactional
     AuthUser findByEmail(String email){
-        entityManager.createQuery("select u from AuthUser u where u.email=:email",AuthUser)
-                .setParameter("email",email)
-                .singleResult
+        try {
+            return entityManager.createQuery("select u from AuthUser u where u.email=:email",AuthUser)
+                    .setParameter("email",email)
+                    .singleResult
+        }catch(NoResultException e){
+            return null
+        }
+    }
+
+    @Transactional
+    void persist(AuthUser authUser){
+        entityManager.persist(authUser)
+    }
+
+    @Transactional
+    AuthUser save(AuthUser authUser){
+        entityManager.merge(authUser)
+    }
+
+    @Override
+    boolean existsByEmail(String email) {
+        return findByEmail(email)!=null
     }
 }
